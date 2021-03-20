@@ -50,14 +50,14 @@ const AddMarker = (props: Props) => {
 };
 
 interface State {
-  someVar: string;
+  health_service_area: string;
   currentLatLng: LatLngExpression
 }
 
 class App extends React.Component <{}, State>{
 
   state = { 
-    someVar: "Click a location on the map to view your Community Health Service Area",
+    health_service_area: "Click a location on the map to view your Community Health Service Area",
     currentLatLng: {lat: 50, lng: -120}
   }
 
@@ -72,7 +72,7 @@ class App extends React.Component <{}, State>{
 
   handleHealthServiceArea(newValue: string) {
     this.setState({
-      someVar: newValue
+      health_service_area: newValue
     })
   }
 
@@ -105,7 +105,7 @@ class App extends React.Component <{}, State>{
           <p>
             Community Health Service Area
           </p>
-          <div>{this.state.someVar}</div>
+          <div>{this.state.health_service_area}</div>
           <br/>
           <button onClick={this.fetchCommunityHealthServiceArea} > Get Community Health Service Area </button>
           <br/>
