@@ -27,7 +27,8 @@ import { parseJsonConfigFileContent } from 'typescript';
 // }
 
 interface Props {
-  handler: Function
+  handleHealthServiceArea: Function,
+  setCurrentLatLng: Function
 }
 
 const AddMarker = (props: Props) => {
@@ -36,21 +37,8 @@ const AddMarker = (props: Props) => {
   useMapEvents({
     click: (e) => {
       let latLngExp: LatLngExpression = e.latlng
-      let latitude = latLngExp.lat
-      let longitude = latLngExp.lng
       setPosition(latLngExp)
-      const urlTemplate = `http://localhost:8000/myview/?longitude=${longitude}&latitude=${latitude}`
-      fetch(urlTemplate)
-        .then(response => response.json())
-        .then(data => {
-          if(data.totalFeatures === 0){
-            props.handler("INVALID LOCATION")
-          } else {
-            props.handler(data.features[0].properties.CMNTY_HLTH_SERV_AREA_NAME)
-          }
-        })
-
-      /* CODE TO ADD NEW PLACE TO STORE (check the source code) */
+      props.setCurrentLatLng(latLngExp)
     },
   });
 
@@ -61,22 +49,53 @@ const AddMarker = (props: Props) => {
   }
 };
 
-class App extends React.Component {
+interface State {
+  someVar: string;
+  currentLatLng: LatLngExpression
+}
+
+class App extends React.Component <{}, State>{
 
   state = { 
-    someVar: "Click a location on the map to view your Community Health Service Area"
+    someVar: "Click a location on the map to view your Community Health Service Area",
+    currentLatLng: {lat: 50, lng: -120}
   }
 
   constructor(props: {} | Readonly<{}>) {
     super(props)
 
-    this.handler = this.handler.bind(this)
+    this.handleHealthServiceArea = this.handleHealthServiceArea.bind(this)
+    this.fetchCommunityHealthServiceArea = this.fetchCommunityHealthServiceArea.bind(this)
+    this.setCurrentLatLng = this.setCurrentLatLng.bind(this)
+
   }
 
-  handler(newValue: string) {
+  handleHealthServiceArea(newValue: string) {
     this.setState({
       someVar: newValue
     })
+  }
+
+  setCurrentLatLng(latLng: LatLngExpression) {
+    this.setState({
+      currentLatLng: latLng
+    })
+  }
+
+  fetchCommunityHealthServiceArea() {
+    let currentLatLng = this.state.currentLatLng
+    let latitude = currentLatLng.lat
+    let longitude = currentLatLng.lng
+    const urlTemplate = `http://localhost:8000/healthservicearea/?longitude=${longitude}&latitude=${latitude}`
+    fetch(urlTemplate)
+      .then(response => response.json())
+      .then(data => {
+        if(data.totalFeatures === 0){
+          this.handleHealthServiceArea("INVALID LOCATION")
+        } else {
+          this.handleHealthServiceArea(data.features[0].properties.CMNTY_HLTH_SERV_AREA_NAME)
+        }
+      })
   }
 
   render(){
@@ -88,12 +107,14 @@ class App extends React.Component {
           </p>
           <div>{this.state.someVar}</div>
           <br/>
+          <button onClick={this.fetchCommunityHealthServiceArea} > Get Community Health Service Area </button>
+          <br/>
           <MapContainer style={{ height: '100vh', width: '100wh' }} center={[50.726669, -120.647621]} zoom={6} scrollWheelZoom={true} touchZoom={true}>
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <AddMarker handler = {this.handler} />
+            <AddMarker setCurrentLatLng = {this.setCurrentLatLng} handleHealthServiceArea = {this.handleHealthServiceArea} />
           </MapContainer>
         </header>
       </div>
