@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 //import logo from './logo.svg';
 import './App.css';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
+import { LatLngExpression } from "leaflet";
 
 // function LocationMarker() {
 //   const [position, setPosition] = useState(null)
@@ -23,21 +24,40 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaf
 //   )
 // }
 
+const AddMarker = () => {
+  const [position, setPosition] = useState<null | LatLngExpression>();
+
+  useMapEvents({
+    click: (e) => {
+      setPosition(e.latlng); // 👈 add marker
+
+      /* CODE TO ADD NEW PLACE TO STORE (check the source code) */
+    },
+  });
+
+  if(position != null){
+    return <Marker position={position}></Marker>
+  } else {
+    return <div></div>
+  }
+};
+
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <MapContainer style={{ height: '100vh', width: '100wh' }} center={[53.726669, -127.647621]} zoom={6} scrollWheelZoom={false}>
+        <MapContainer style={{ height: '100vh', width: '100wh' }} center={[53.726669, -127.647621]} zoom={6} scrollWheelZoom={true} touchZoom={true}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={[53.726669, -127.647621]}>
+          {/* <Marker position={[53.726669, -127.647621]}>
             <Popup>
               A pretty CSS3 popup. <br /> Easily customizable.
             </Popup>
-          </Marker>
+          </Marker> */}
+          <AddMarker/>
         </MapContainer>
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
