@@ -5,6 +5,9 @@ services:
       - POSTGRES_DB=bc_full_stack
       - POSTGRES_USER=bc_full_stack
       - POSTGRES_PASSWORD=bc_full_stack
+    working_dir: /
+    volumes:
+      - ./get_count.sh:/get_count.sh
     ports:
       - "5432:5432"
   web:
