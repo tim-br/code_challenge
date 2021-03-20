@@ -4,7 +4,6 @@ python:
 env:
   - DATABASE_NAME=test_db
   - DATABASE_USER=postgres
-  - DATABASE_PASSWORD=''
   - DATABASE_HOST=localhost
 services:
   - postgresql
