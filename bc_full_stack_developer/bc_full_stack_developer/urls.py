@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import my_view
+from .views import HealthServiceArea
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('myview/', my_view, name='myview')
+    path('healthservicearea/', HealthServiceArea, name='healthservicearea')
 ]
