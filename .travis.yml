@@ -2,6 +2,6 @@ language: python
 python:
   - "3.9"
 install:
-  - pip install -r requirements.txt
+  - install.sh
 script:
-  - python manage.py test
+  - build.sh
