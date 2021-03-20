@@ -8,10 +8,10 @@ services:
     ports:
       - "5432:5432"
   web:
-    build: .
+    build: ./bc_full_stack_developer
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - ./bc_full_stack_developer:/code
     ports:
       - "8000:8000"
     depends_on:
