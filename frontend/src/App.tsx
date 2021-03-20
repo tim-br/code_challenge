@@ -6,26 +6,6 @@ import { LatLngExpression } from "leaflet";
 import { ReactComponent } from '*.svg';
 import { parseJsonConfigFileContent } from 'typescript';
 
-// function LocationMarker() {
-//   const [position, setPosition] = useState(null)
-//   const map = useMapEvents({
-//     click(e) {
-//       //map.locate()
-//       setPosition(e.latlng)
-//     },
-//     locationfound(e) {
-//       setPosition(e.latlng)
-//       map.flyTo(e.latlng, map.getZoom())
-//     },
-//   })
-
-//   return position === null ? null : (
-//     <Marker position={position}>
-//       <Popup>You are here</Popup>
-//     </Marker>
-//   )
-// }
-
 interface Props {
   handleHealthServiceArea: Function,
   setCurrentLatLng: Function
