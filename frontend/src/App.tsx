@@ -83,23 +83,18 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
+          <p>
+            Community Health Service Area
+          </p>
+          <div>{this.state.someVar}</div>
+          <br/>
           <MapContainer style={{ height: '100vh', width: '100wh' }} center={[50.726669, -120.647621]} zoom={6} scrollWheelZoom={true} touchZoom={true}>
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {/* <Marker position={[53.726669, -127.647621]}>
-              <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
-              </Popup>
-            </Marker> */}
             <AddMarker handler = {this.handler} />
           </MapContainer>
-          <p>
-            Community Health Service Area
-          </p>
-          <div>{this.state.someVar}</div>
         </header>
       </div>
     );
