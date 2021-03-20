@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'bc_full_stack_developer',
 ]
 
 MIDDLEWARE = [
