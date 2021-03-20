@@ -3,8 +3,6 @@ from django.test import Client, TestCase
 from django.urls import reverse
 from .models import ApiRequest
 
-print("YAY")
-
 class MyViewTestCase(TestCase):
 
     def test_valid_url(self):
