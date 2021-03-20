@@ -4,6 +4,5 @@ python:
 before_install: cd bc_full_stack_developer
 install:
   - pip install -r requirements.txt
-before_script: cd bc_full_stack_developer
 script:
   - python manage.py test
