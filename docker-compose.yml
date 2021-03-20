@@ -7,7 +7,7 @@ services:
       - POSTGRES_PASSWORD=bc_full_stack
     working_dir: /
     volumes:
-      - ./get_count.sh:/get_count.sh
+      - ./sql_queries:/sql_queries
     ports:
       - "5432:5432"
   web:
