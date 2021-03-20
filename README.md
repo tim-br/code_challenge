@@ -10,6 +10,8 @@ The app can be accessed on http://localhost:5000 on Chrome and Firefox. The app 
 
 ### Sql Queries
 
+_The db container needs to be running for these queries. Check that the containers are running with_ `docker-compose ps` _._
+
 ```shell
 # gets total request count
 $ docker-compose exec db /sql_queries/get_request_count.sh 
