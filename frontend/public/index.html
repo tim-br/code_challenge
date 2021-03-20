@@ -36,16 +36,24 @@
     crossorigin=""></script>
 
     <style>
-      body {
+      html, body
+        {
+            padding-bottom: 30px;
+            margin: 0;
+            height: 100%;
+        }
+      /* body {
         padding-bottom: 30px;
-      }
+      } */
       h1, h2, p {
         font-family: sans-serif;
         text-align: center;
       }
       .leaflet-container {
-        height: 400px;
+        position: relative;
+        height: 80%;
         width: 80%;
+        max-height: 600px;
         margin: 0 auto;
       }
     </style>
