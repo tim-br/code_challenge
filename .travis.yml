@@ -1,10 +1,11 @@
-env:
-  - DATABASE_NAME='test_db'
-  - DATABASE_USER='postgres'
-  - DATABASE_PASSWORD=''
 language: python
 python:
   - "3.9"
+# env:
+#   - DATABASE_NAME='test_db'
+#   - DATABASE_USER='postgres'
+#   - DATABASE_PASSWORD=''
+#   - DATABASE_HOST='localhost'
 services:
   - postgresql
 before_install: cd bc_full_stack_developer
