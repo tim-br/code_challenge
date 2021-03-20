@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tim-br/code_challenge.svg?branch=master)](https://travis-ci.org/tim-br/code_challenge)
+
 ### Instructions
 
 ```shell
