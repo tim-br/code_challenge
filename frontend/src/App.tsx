@@ -25,7 +25,11 @@ import { ReactComponent } from '*.svg';
 //   )
 // }
 
-const AddMarker = () => {
+interface Props {
+  handler: Function
+}
+
+const AddMarker = (props: Props) => {
   const [position, setPosition] = useState<null | LatLngExpression>();
 
   useMapEvents({
@@ -37,6 +41,7 @@ const AddMarker = () => {
       const urlTemplate = `http://localhost:8000/myview/?longitude=${longitude}&latitude=${latitude}`
       console.log("urltemplate")
       console.log(urlTemplate)
+      props.handler()
       fetch(urlTemplate)
         .then(response => response.json())
         .then(data => console.log(data));
@@ -54,6 +59,22 @@ const AddMarker = () => {
 
 class App extends React.Component {
 
+  state = { 
+    someVar: "hello"
+  }
+
+  constructor(props: {} | Readonly<{}>) {
+    super(props)
+
+    this.handler = this.handler.bind(this)
+  }
+
+  handler() {
+    this.setState({
+      someVar: 'some value'
+    })
+  }
+
   render(){
     return (
       <div className="App">
@@ -69,7 +90,7 @@ class App extends React.Component {
                 A pretty CSS3 popup. <br /> Easily customizable.
               </Popup>
             </Marker> */}
-            <AddMarker/>
+            <AddMarker handler = {this.handler} />
           </MapContainer>
           <p>
             Edit <code>src/App.tsx</code> and save to reload.
@@ -82,6 +103,7 @@ class App extends React.Component {
           >
             Learn React
           </a> */}
+          <div>{this.state.someVar}</div>
         </header>
       </div>
     );
