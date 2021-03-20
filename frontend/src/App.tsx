@@ -29,7 +29,16 @@ const AddMarker = () => {
 
   useMapEvents({
     click: (e) => {
-      setPosition(e.latlng); // 👈 add marker
+      let latLngExp: LatLngExpression = e.latlng
+      let latitude = latLngExp.lat
+      let longitude = latLngExp.lng
+      setPosition(latLngExp)
+      const urlTemplate = `http://localhost:8000/myview/?longitude=${longitude}&latitude=${latitude}`
+      console.log("urltemplate")
+      console.log(urlTemplate)
+      fetch(urlTemplate)
+        .then(response => response.json())
+        .then(data => console.log(data));
 
       /* CODE TO ADD NEW PLACE TO STORE (check the source code) */
     },
