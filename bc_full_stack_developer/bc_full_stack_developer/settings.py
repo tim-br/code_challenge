@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'bc_full_stack_developer.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bc_full_stack',
-        'USER': 'bc_full_stack',
-        'PASSWORD': 'bc_full_stack',
-        'HOST': 'db',
+        'NAME': os.environ['DATABASE_NAME'],
+        'USER': os.environ['DATABASE_USER'],
+        'PASSWORD': os.environ['DATABASE_PASSWORD'],
+        'HOST': os.environ['DATABASE_HOST'],
         'PORT': '5432',
     }
 }
