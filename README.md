@@ -6,7 +6,7 @@
 $ docker-compose up
 ```
 
-The app can be accessed on http://localhost:3000 on Chrome and Firefox. The app has not been fully tested on Safari -- YMMV.
+The app can be accessed on http://localhost:5000 on Chrome and Firefox. The app has not been fully tested on Safari -- YMMV.
 
 ### Sql Queries
 
