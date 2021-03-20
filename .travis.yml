@@ -1,7 +1,8 @@
 language: python
 python:
   - "3.9"
+before_script: cd project
 install:
-  - install.sh
+  - pip install -r requirements.txt
 script:
-  - build.sh
+  - python manage.py test
