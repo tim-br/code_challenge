@@ -15,6 +15,11 @@ services:
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./bc_full_stack_developer:/code
+    environment:
+      - DATABASE_NAME=bc_full_stack
+      - DATABASE_USER=bc_full_stack
+      - DATABASE_PASSWORD=bc_full_stack
+      - DATABASE_HOST=db
     ports:
       - "8000:8000"
     depends_on:
