@@ -80,8 +80,12 @@ class App extends React.Component<{}, State> {
         lat: latFloat,
         lng: parseFloat(this.state.currentLng)
       }
+      let nextLng = ''
+      if (!Number.isNaN(newCurrentLatLng.lng)) {
+        let nextLng = newCurrentLatLng.lat.toString()
+      }
       this.setState({
-        currentLng: newCurrentLatLng.lng.toString(),
+        currentLng: nextLng,
         currentLat: lat,
         currentLatLng: newCurrentLatLng,
         formEditing: true,
@@ -103,10 +107,13 @@ class App extends React.Component<{}, State> {
         lat: parseFloat(this.state.currentLat),
         lng: lngFloat
       }
-
+      let nextLat = ''
+      if (!Number.isNaN(newCurrentLatLng.lat)) {
+        let nextLat = newCurrentLatLng.lat.toString()
+      }
       this.setState({
         currentLng: lng,
-        currentLat: newCurrentLatLng.lat.toString(),
+        currentLat: nextLat,
         currentLatLng: newCurrentLatLng,
         formEditing: true,
         invalidLngMsg: ''
