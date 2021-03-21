@@ -1,33 +1,10 @@
-import React, { useState } from 'react';
-//import logo from './logo.svg';
+import React from 'react';
+import AddMarker from './AddMarker';
 import './App.css';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import { LatLngExpression } from "leaflet";
 import { ReactComponent } from '*.svg';
 import { parseJsonConfigFileContent } from 'typescript';
-
-interface Props {
-  handleHealthServiceArea: Function,
-  setCurrentLatLng: Function
-}
-
-const AddMarker = (props: Props) => {
-  const [position, setPosition] = useState<null | LatLngExpression>();
-
-  useMapEvents({
-    click: (e) => {
-      let latLngExp: LatLngExpression = e.latlng
-      setPosition(latLngExp)
-      props.setCurrentLatLng(latLngExp)
-    },
-  });
-
-  if(position != null){
-    return <Marker position={position}></Marker>
-  } else {
-    return <div></div>
-  }
-};
 
 interface State {
   health_service_area: string;
