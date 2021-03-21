@@ -100,8 +100,11 @@ class App extends React.Component <{}, State>{
   }
 
   fetchCommunityHealthServiceArea() {
-    if(this.state.map != null && this.state.formEditing) {
-      this.state.map.flyTo(this.state.currentLatLng)
+    if(this.state.map != null) {
+      this.state.map.flyTo(this.state.currentLatLng, 12, {
+        animate: true,
+        duration: 1.5
+      });
     }
     if(this.state.formEditing) {
       this.setState({ lastLatLng: this.state.currentLatLng })
