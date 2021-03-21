@@ -1,4 +1,3 @@
-import { LatLngExpression } from "leaflet";
 import React from 'react';
 
 interface Props {
@@ -9,10 +8,6 @@ interface Props {
 }
 
 const LatLngForm = (props: Props) => {
-
-    // const foo = (e) => {
-    //     return "bax"
-    // }
 
     const updateLat = (e: React.ChangeEvent<HTMLInputElement>) => {
         props.updateLat(e.target.value)

@@ -2,11 +2,8 @@ import React from 'react';
 import AddMarker from './AddMarker';
 import LatLngForm from './LatLngForm';
 import './App.css';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import { LatLngExpression, Map } from "leaflet";
-import { ReactComponent } from '*.svg';
-import { parseJsonConfigFileContent } from 'typescript';
-import { number } from 'prop-types';
 
 interface State {
   health_service_area: string;
