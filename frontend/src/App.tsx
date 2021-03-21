@@ -5,6 +5,8 @@ import './App.css';
 import { MapContainer, TileLayer } from 'react-leaflet'
 import { LatLngExpression, Map } from "leaflet";
 
+const OUTSIDE_OF_BC_ERROR_MSG = "INVALID LOCATION -- OUTSIDE OF BRITISH COLUMBIA"
+
 interface State {
   health_service_area: string;
   currentLatLng: LatLngExpression;
@@ -97,12 +99,6 @@ class App extends React.Component <{}, State>{
   }
 
   fetchCommunityHealthServiceArea() {
-    if(this.state.map != null) {
-      this.state.map.flyTo(this.state.currentLatLng, 12, {
-        animate: true,
-        duration: 1.5
-      });
-    }
     if(this.state.formEditing) {
       this.setState({ lastLatLng: this.state.currentLatLng })
       let currentLatLng = this.state.currentLatLng
@@ -113,7 +109,7 @@ class App extends React.Component <{}, State>{
         .then(response => response.json())
         .then(data => {
           if(data.totalFeatures === 0){
-            this.handleHealthServiceArea("INVALID LOCATION -- OUTSIDE OF BRITISH COLUMBIA")
+            this.handleHealthServiceArea(OUTSIDE_OF_BC_ERROR_MSG)
           } else {
             this.handleHealthServiceArea(data.features[0].properties.CMNTY_HLTH_SERV_AREA_NAME)
           }
@@ -127,9 +123,17 @@ class App extends React.Component <{}, State>{
         .then(response => response.json())
         .then(data => {
           if(data.totalFeatures === 0){
-            this.handleHealthServiceArea("INVALID LOCATION -- OUTSIDE OF BRITISH COLUMBIA")
+            this.handleHealthServiceArea(OUTSIDE_OF_BC_ERROR_MSG)
           } else {
             this.handleHealthServiceArea(data.features[0].properties.CMNTY_HLTH_SERV_AREA_NAME)
+          }
+
+          // flyto marker -- but don't flyto if selected point is outside of bc
+          if(this.state.map !== null && this.state.health_service_area !== OUTSIDE_OF_BC_ERROR_MSG) {
+            this.state.map.flyTo(this.state.currentLatLng, 12, {
+              animate: true,
+              duration: 1.5
+            });
           }
         })
     }
