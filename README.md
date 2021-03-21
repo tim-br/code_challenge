@@ -8,6 +8,8 @@ $ docker-compose up
 
 The app can be accessed on http://localhost:5000 on Chrome and Firefox. The app has not been fully tested on Safari -- YMMV.
 
+An example api call is located at: http://localhost:8000/healthservicearea/?longitude=-123.711&latitude=48.8277.
+
 ### Sql Queries
 
 Open a new terminal (or run `docker-compose` in the background) to run the sql queries.
