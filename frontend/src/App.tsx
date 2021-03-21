@@ -97,7 +97,6 @@ class App extends React.Component<{}, State> {
   }
 
   updateLng = (lng: string) => {
-    console.log('update lng')
     if (lng !== null && lng !== '' && !Number.isNaN(parseFloat(lng))) {
       let lngFloat = parseFloat(lng)
       let newCurrentLatLng = {
