@@ -87,28 +87,9 @@ class App extends React.Component<{}, State> {
         formEditing: true,
         invalidLatMsg: ''
       })
-      // if (Number.isNaN(latFloat)) {
-      //   console.log('not a num')
-      //   console.log(newCurrentLatLng.lng.toString())
-      //   this.setState({
-      //     currentLat: lat,
-      //     //currentLng: newCurrentLatLng.lng.toString(),
-      //     formEditing: true,
-      //     invalidLatMsg: INVALID_LAT_MSG
-      //   })
-      // } else {
-      //   this.setState({
-      //     currentLng: newCurrentLatLng.lng.toString(),
-      //     currentLat: lat,
-      //     currentLatLng: newCurrentLatLng,
-      //     formEditing: true,
-      //     invalidLatMsg: ''
-      //   })
-      // }
     } else {
       this.setState({
         currentLat: lat,
-        //currentLng: this.state.currentLatLng.lng.toString(),
         formEditing: true,
         invalidLatMsg: INVALID_LAT_MSG
       })
@@ -123,7 +104,7 @@ class App extends React.Component<{}, State> {
         lat: parseFloat(this.state.currentLat),
         lng: lngFloat
       }
-      
+
       this.setState({
         currentLng: lng,
         currentLat: newCurrentLatLng.lat.toString(),
@@ -131,11 +112,9 @@ class App extends React.Component<{}, State> {
         formEditing: true,
         invalidLngMsg: ''
       })
-      
     } else {
       this.setState({
         currentLng: lng,
-        //currentLat: this.state.currentLatLng.lat.toString(),
         formEditing: true,
         invalidLngMsg: INVALID_LNG_MSG
       })
