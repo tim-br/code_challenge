@@ -12,7 +12,7 @@ An example api call is located at: http://localhost:8000/healthservicearea/?long
 
 ### Sql Queries
 
-Open a new terminal (or run `docker-compose` in the background) to run the sql queries.
+Open a new terminal (or run `docker-compose -d` to run the docker containers in the background) to run the sql queries.
 
 _The db container needs to be running for these queries. Check that the containers are running with_ `docker-compose ps` _._
 
