@@ -185,31 +185,29 @@ class App extends React.Component<{}, State> {
   }
 
   render() {
+    let currentLat
+    let currentLng
+    if (this.state.formEditing) {
+      currentLat = this.state.currentLat
+      currentLng = this.state.currentLng
+    } else {
+      currentLat = this.state.currentLatLng.lat.toString()
+      currentLng = this.state.currentLatLng.lng.toString()
+    }
     return (
       <div className="App">
         <header className="App-header">
           <p>Community Health Service Area</p>
           <div>{this.state.health_service_area}</div>
           <br />
-          {this.state.formEditing ? (
-            <LatLngForm
-              invalidLatMsg={this.state.invalidLatMsg}
-              invalidLngMsg={this.state.invalidLngMsg}
-              currentLat={this.state.currentLat}
-              currentLng={this.state.currentLng}
-              updateLat={this.updateLat}
-              updateLng={this.updateLng}
-            />
-          ) : (
-            <LatLngForm
-              invalidLatMsg={this.state.invalidLatMsg}
-              invalidLngMsg={this.state.invalidLngMsg}
-              currentLat={this.state.currentLatLng.lat.toString()}
-              currentLng={this.state.currentLatLng.lng.toString()}
-              updateLat={this.updateLat}
-              updateLng={this.updateLng}
-            />
-          )}
+          <LatLngForm
+            invalidLatMsg={this.state.invalidLatMsg}
+            invalidLngMsg={this.state.invalidLngMsg}
+            currentLat={currentLat}
+            currentLng={currentLng}
+            updateLat={this.updateLat}
+            updateLng={this.updateLng}
+          />
           <br />
           <button onClick={this.fetchCommunityHealthServiceArea}>
             {' '}
