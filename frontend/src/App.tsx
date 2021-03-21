@@ -58,14 +58,18 @@ class App extends React.Component<{}, State> {
   setCurrentLatLng(latLng: LatLngExpression) {
     this.setState({
       currentLatLng: latLng,
-      formEditing: false
+      formEditing: false,
+      invalidLatMsg: '',
+      invalidLngMsg: ''
     })
   }
 
   setLastLatLng(latLng: LatLngExpression) {
     this.setState({
       lastLatLng: latLng,
-      formEditing: false
+      formEditing: false,
+      invalidLatMsg: '',
+      invalidLngMsg: ''
     })
   }
 
