@@ -108,7 +108,7 @@ class App extends React.Component <{}, State>{
         .then(response => response.json())
         .then(data => {
           if(data.totalFeatures === 0){
-            this.handleHealthServiceArea("INVALID LOCATION")
+            this.handleHealthServiceArea("INVALID LOCATION -- OUTSIDE OF BRITISH COLUMBIA")
           } else {
             this.handleHealthServiceArea(data.features[0].properties.CMNTY_HLTH_SERV_AREA_NAME)
           }
@@ -122,7 +122,7 @@ class App extends React.Component <{}, State>{
         .then(response => response.json())
         .then(data => {
           if(data.totalFeatures === 0){
-            this.handleHealthServiceArea("INVALID LOCATION")
+            this.handleHealthServiceArea("INVALID LOCATION -- OUTSIDE OF BRITISH COLUMBIA")
           } else {
             this.handleHealthServiceArea(data.features[0].properties.CMNTY_HLTH_SERV_AREA_NAME)
           }
