@@ -28,8 +28,8 @@ class App extends React.Component<{}, State> {
       'Click a location on the map to view your Community Health Service Area',
     currentLatLng: { lat: 0, lng: 0 },
     lastLatLng: { lat: 0, lng: 0 },
-    currentLat: '',
-    currentLng: '',
+    currentLat: '50.726669',
+    currentLng: '-120.647621',
     formEditing: true,
     map: null,
     invalidLatMsg: '',
@@ -76,29 +76,32 @@ class App extends React.Component<{}, State> {
   updateLat = (lat: string) => {
     if (lat !== null && lat !== '') {
       let latFloat = parseFloat(lat)
+      let newCurrentLatLng = {
+        lat: latFloat,
+        lng: parseFloat(this.state.currentLng)
+      }
       if (Number.isNaN(latFloat)) {
+        console.log('not a num')
+        console.log(newCurrentLatLng.lng.toString())
         this.setState({
           currentLat: lat,
-          currentLng: this.state.currentLatLng.lng.toString(),
+          //currentLng: newCurrentLatLng.lng.toString(),
           formEditing: true,
           invalidLatMsg: INVALID_LAT_MSG
         })
       } else {
-        let newCurrentLatLng = {
-          lat: latFloat,
-          lng: this.state.currentLatLng.lng
-        }
         this.setState({
-          currentLng: this.state.currentLatLng.lng.toString(),
+          currentLng: newCurrentLatLng.lng.toString(),
           currentLat: lat,
           currentLatLng: newCurrentLatLng,
-          formEditing: true
+          formEditing: true,
+          invalidLatMsg: ''
         })
       }
     } else {
       this.setState({
         currentLat: lat,
-        currentLng: this.state.currentLatLng.lng.toString(),
+        //currentLng: this.state.currentLatLng.lng.toString(),
         formEditing: true,
         invalidLatMsg: INVALID_LAT_MSG
       })
@@ -109,30 +112,31 @@ class App extends React.Component<{}, State> {
     console.log('update lng')
     if (lng !== null && lng !== '') {
       let lngFloat = parseFloat(lng)
+      let newCurrentLatLng = {
+        lat: parseFloat(this.state.currentLat),
+        lng: lngFloat
+      }
       if (Number.isNaN(lngFloat)) {
         console.log('is nan')
         this.setState({
           currentLng: lng,
-          currentLat: this.state.currentLatLng.lat.toString(),
+          //currentLat: newCurrentLatLng.lat.toString(),
           formEditing: true,
           invalidLngMsg: INVALID_LNG_MSG
         })
       } else {
-        let newCurrentLatLng = {
-          lat: this.state.currentLatLng.lat,
-          lng: lngFloat
-        }
         this.setState({
           currentLng: lng,
-          currentLat: this.state.currentLatLng.lat.toString(),
+          currentLat: newCurrentLatLng.lat.toString(),
           currentLatLng: newCurrentLatLng,
-          formEditing: true
+          formEditing: true,
+          invalidLngMsg: ''
         })
       }
     } else {
       this.setState({
         currentLng: lng,
-        currentLat: this.state.currentLatLng.lat.toString(),
+        //currentLat: this.state.currentLatLng.lat.toString(),
         formEditing: true,
         invalidLngMsg: INVALID_LNG_MSG
       })
@@ -141,33 +145,37 @@ class App extends React.Component<{}, State> {
 
   fetchCommunityHealthServiceArea() {
     if (this.state.formEditing) {
-      this.setState({ lastLatLng: this.state.currentLatLng })
-      let currentLatLng = this.state.currentLatLng
-      let latitude = currentLatLng.lat
-      let longitude = currentLatLng.lng
-      const urlTemplate = `http://localhost:8000/healthservicearea/?longitude=${longitude}&latitude=${latitude}`
-      fetch(urlTemplate)
-        .then(response => response.json())
-        .then(data => {
-          if (data.totalFeatures === 0) {
-            this.handleHealthServiceArea(OUTSIDE_OF_BC_ERROR_MSG)
-          } else {
-            this.handleHealthServiceArea(
-              data.features[0].properties.CMNTY_HLTH_SERV_AREA_NAME
-            )
-          }
+      if (this.state.invalidLatMsg !== '' || this.state.invalidLngMsg !== '') {
+        this.handleHealthServiceArea('INVALID LATITUDE OR LONGITUDE VALUE')
+      } else {
+        this.setState({ lastLatLng: this.state.currentLatLng })
+        let currentLatLng = this.state.currentLatLng
+        let latitude = currentLatLng.lat
+        let longitude = currentLatLng.lng
+        const urlTemplate = `http://localhost:8000/healthservicearea/?longitude=${longitude}&latitude=${latitude}`
+        fetch(urlTemplate)
+          .then(response => response.json())
+          .then(data => {
+            if (data.totalFeatures === 0) {
+              this.handleHealthServiceArea(OUTSIDE_OF_BC_ERROR_MSG)
+            } else {
+              this.handleHealthServiceArea(
+                data.features[0].properties.CMNTY_HLTH_SERV_AREA_NAME
+              )
+            }
 
-          // flyto marker -- but don't flyto if selected point is outside of bc
-          if (
-            this.state.map !== null &&
-            this.state.health_service_area !== OUTSIDE_OF_BC_ERROR_MSG
-          ) {
-            this.state.map.flyTo(this.state.currentLatLng, 12, {
-              animate: true,
-              duration: 1.5
-            })
-          }
-        })
+            // flyto marker -- but don't flyto if selected point is outside of bc
+            if (
+              this.state.map !== null &&
+              this.state.health_service_area !== OUTSIDE_OF_BC_ERROR_MSG
+            ) {
+              this.state.map.flyTo(this.state.currentLatLng, 12, {
+                animate: true,
+                duration: 1.5
+              })
+            }
+          })
+      }
     } else {
       let currentLatLng = this.state.currentLatLng
       let latitude = currentLatLng.lat
