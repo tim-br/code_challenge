@@ -74,30 +74,37 @@ class App extends React.Component<{}, State> {
   }
 
   updateLat = (lat: string) => {
-    if (lat !== null && lat !== '') {
+    if (lat !== null && lat !== '' && !Number.isNaN(parseFloat(lat))) {
       let latFloat = parseFloat(lat)
       let newCurrentLatLng = {
         lat: latFloat,
         lng: parseFloat(this.state.currentLng)
       }
-      if (Number.isNaN(latFloat)) {
-        console.log('not a num')
-        console.log(newCurrentLatLng.lng.toString())
-        this.setState({
-          currentLat: lat,
-          //currentLng: newCurrentLatLng.lng.toString(),
-          formEditing: true,
-          invalidLatMsg: INVALID_LAT_MSG
-        })
-      } else {
-        this.setState({
-          currentLng: newCurrentLatLng.lng.toString(),
-          currentLat: lat,
-          currentLatLng: newCurrentLatLng,
-          formEditing: true,
-          invalidLatMsg: ''
-        })
-      }
+      this.setState({
+        currentLng: newCurrentLatLng.lng.toString(),
+        currentLat: lat,
+        currentLatLng: newCurrentLatLng,
+        formEditing: true,
+        invalidLatMsg: ''
+      })
+      // if (Number.isNaN(latFloat)) {
+      //   console.log('not a num')
+      //   console.log(newCurrentLatLng.lng.toString())
+      //   this.setState({
+      //     currentLat: lat,
+      //     //currentLng: newCurrentLatLng.lng.toString(),
+      //     formEditing: true,
+      //     invalidLatMsg: INVALID_LAT_MSG
+      //   })
+      // } else {
+      //   this.setState({
+      //     currentLng: newCurrentLatLng.lng.toString(),
+      //     currentLat: lat,
+      //     currentLatLng: newCurrentLatLng,
+      //     formEditing: true,
+      //     invalidLatMsg: ''
+      //   })
+      // }
     } else {
       this.setState({
         currentLat: lat,
@@ -110,29 +117,21 @@ class App extends React.Component<{}, State> {
 
   updateLng = (lng: string) => {
     console.log('update lng')
-    if (lng !== null && lng !== '') {
+    if (lng !== null && lng !== '' && !Number.isNaN(parseFloat(lng))) {
       let lngFloat = parseFloat(lng)
       let newCurrentLatLng = {
         lat: parseFloat(this.state.currentLat),
         lng: lngFloat
       }
-      if (Number.isNaN(lngFloat)) {
-        console.log('is nan')
-        this.setState({
-          currentLng: lng,
-          //currentLat: newCurrentLatLng.lat.toString(),
-          formEditing: true,
-          invalidLngMsg: INVALID_LNG_MSG
-        })
-      } else {
-        this.setState({
-          currentLng: lng,
-          currentLat: newCurrentLatLng.lat.toString(),
-          currentLatLng: newCurrentLatLng,
-          formEditing: true,
-          invalidLngMsg: ''
-        })
-      }
+      
+      this.setState({
+        currentLng: lng,
+        currentLat: newCurrentLatLng.lat.toString(),
+        currentLatLng: newCurrentLatLng,
+        formEditing: true,
+        invalidLngMsg: ''
+      })
+      
     } else {
       this.setState({
         currentLng: lng,
