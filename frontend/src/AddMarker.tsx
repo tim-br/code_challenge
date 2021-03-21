@@ -4,25 +4,32 @@ import { Marker, useMapEvents } from 'react-leaflet'
 
 interface Props {
     handleHealthServiceArea: Function,
-    setCurrentLatLng: Function
+    setLastLatLng: Function,
+    setCurrentLatLng: Function,
+    latLng: LatLngExpression,
+    lastLatLng: LatLngExpression,
+    formEditing: boolean,
 }
   
 const AddMarker = (props: Props) => {
-    const [position, setPosition] = useState<null | LatLngExpression>();
 
     useMapEvents({
         click: (e) => {
         let latLngExp: LatLngExpression = e.latlng
-        setPosition(latLngExp)
+        props.setLastLatLng(latLngExp)
         props.setCurrentLatLng(latLngExp)
     },
     });
-
-    if(position != null){
-        return <Marker position={position}></Marker>
-    } else {
-        return <div></div>
-    }
-};
+    return (
+        <div>
+        { props.formEditing? <Marker position={props.lastLatLng}></Marker> : <Marker position={props.latLng}></Marker> } 
+        </div>
+    )
+    // if(position != null){
+    //     return <Marker position={position}></Marker>
+    // } else {
+    //     return <Marker position={props.latLng}></Marker>
+    // }
+}
 
 export default AddMarker
