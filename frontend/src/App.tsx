@@ -3,7 +3,7 @@ import AddMarker from './AddMarker';
 import LatLngForm from './LatLngForm';
 import './App.css';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
-import { LatLngExpression } from "leaflet";
+import { LatLngExpression, Map } from "leaflet";
 import { ReactComponent } from '*.svg';
 import { parseJsonConfigFileContent } from 'typescript';
 import { number } from 'prop-types';
@@ -15,6 +15,7 @@ interface State {
   currentLat: string;
   currentLng: string;
   formEditing: boolean;
+  map: null | Map;
 }
 
 class App extends React.Component <{}, State>{
@@ -25,7 +26,8 @@ class App extends React.Component <{}, State>{
     lastLatLng: {lat: 0, lng: 0},
     currentLat: "",
     currentLng: "",
-    formEditing: true
+    formEditing: true,
+    map: null,
   }
 
   constructor(props: {} | Readonly<{}>) {
@@ -91,13 +93,16 @@ class App extends React.Component <{}, State>{
     } else {
       this.setState({
         currentLng: lng,
-        currentLat: this.state.currentLatLng.lng.toString(),
+        currentLat: this.state.currentLatLng.lat.toString(),
         formEditing: true
       })
     }
   }
 
   fetchCommunityHealthServiceArea() {
+    if(this.state.map != null && this.state.formEditing) {
+      this.state.map.flyTo(this.state.currentLatLng)
+    }
     if(this.state.formEditing) {
       this.setState({ lastLatLng: this.state.currentLatLng })
       let currentLatLng = this.state.currentLatLng
@@ -143,7 +148,7 @@ class App extends React.Component <{}, State>{
           <br/>
           <button onClick={this.fetchCommunityHealthServiceArea} > Get Community Health Service Area </button>
           <br/>
-          <MapContainer style={{ height: '100vh', width: '100wh' }} center={[50.726669, -120.647621]} zoom={6} scrollWheelZoom={true} touchZoom={true}>
+          <MapContainer style={{ height: '100vh', width: '100wh' }} center={[50.726669, -120.647621]} zoom={6} scrollWheelZoom={true} touchZoom={true} whenCreated={map => this.setState({ map })} >
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
