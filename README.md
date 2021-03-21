@@ -26,5 +26,5 @@ $ docker-compose exec db /sql_queries/get_request_count_by_ip.sh
 ### Tests
 
 ```shell
-docker-compose exec web python manage.py test 
+$ docker-compose exec web python manage.py test 
 ```
