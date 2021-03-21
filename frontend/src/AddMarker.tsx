@@ -25,11 +25,6 @@ const AddMarker = (props: Props) => {
         { props.formEditing? <Marker position={props.lastLatLng}></Marker> : <Marker position={props.latLng}></Marker> } 
         </div>
     )
-    // if(position != null){
-    //     return <Marker position={position}></Marker>
-    // } else {
-    //     return <Marker position={props.latLng}></Marker>
-    // }
 }
 
 export default AddMarker
