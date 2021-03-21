@@ -6,6 +6,8 @@ import { MapContainer, TileLayer } from 'react-leaflet'
 import { LatLngExpression, Map } from "leaflet";
 
 const OUTSIDE_OF_BC_ERROR_MSG = "INVALID LOCATION -- OUTSIDE OF BRITISH COLUMBIA"
+const INVALID_LAT_MSG = "invalid latitude, must be geographic coordinate"
+const INVALID_LNG_MSG = "invalid longitude, must be geographic coordinate"
 
 interface State {
   health_service_area: string;
@@ -15,6 +17,8 @@ interface State {
   currentLng: string;
   formEditing: boolean;
   map: null | Map;
+  invalidLatMsg: string;
+  invalidLngMsg: string;
 }
 
 class App extends React.Component <{}, State>{
@@ -27,6 +31,8 @@ class App extends React.Component <{}, State>{
     currentLng: "",
     formEditing: true,
     map: null,
+    invalidLatMsg: "",
+    invalidLngMsg: "",
   }
 
   constructor(props: {} | Readonly<{}>) {
@@ -63,37 +69,59 @@ class App extends React.Component <{}, State>{
   updateLat = (lat: string) => {
     if(lat !== null && lat !== '') {
       let latFloat = parseFloat(lat)
-      let newCurrentLatLng = {lat: latFloat, lng: this.state.currentLatLng.lng}
-      this.setState({
-        currentLng: this.state.currentLatLng.lng.toString(),
-        currentLat: lat,
-        currentLatLng: newCurrentLatLng,
-        formEditing: true
-      })
+      if(Number.isNaN(latFloat)) {
+        this.setState({
+          currentLat: lat,
+          currentLng: this.state.currentLatLng.lng.toString(),
+          formEditing: true,
+          invalidLatMsg: INVALID_LAT_MSG,
+        })
+      } else {
+        let newCurrentLatLng = {lat: latFloat, lng: this.state.currentLatLng.lng}
+        this.setState({
+          currentLng: this.state.currentLatLng.lng.toString(),
+          currentLat: lat,
+          currentLatLng: newCurrentLatLng,
+          formEditing: true
+        })
+      }
     } else {
       this.setState({
         currentLat: lat,
         currentLng: this.state.currentLatLng.lng.toString(),
-        formEditing: true
+        formEditing: true,
+        invalidLatMsg: INVALID_LAT_MSG,
       })
     }
   }
 
   updateLng = (lng: string) => {
+    console.log("update lng")
     if(lng !== null && lng !== '') {
       let lngFloat = parseFloat(lng)
-      let newCurrentLatLng = {lat: this.state.currentLatLng.lat, lng: lngFloat}
-      this.setState({
-        currentLng: lng,
-        currentLat: this.state.currentLatLng.lat.toString(),
-        currentLatLng: newCurrentLatLng,
-        formEditing: true
-      })
+      if(Number.isNaN(lngFloat)){
+        console.log("is nan")
+        this.setState({
+          currentLng: lng,
+          currentLat: this.state.currentLatLng.lat.toString(),
+          formEditing: true,
+          invalidLngMsg: INVALID_LNG_MSG
+        })
+      } else {
+        let newCurrentLatLng = {lat: this.state.currentLatLng.lat, lng: lngFloat}
+        this.setState({
+          currentLng: lng,
+          currentLat: this.state.currentLatLng.lat.toString(),
+          currentLatLng: newCurrentLatLng,
+          formEditing: true
+        })
+      }
     } else {
       this.setState({
         currentLng: lng,
         currentLat: this.state.currentLatLng.lat.toString(),
-        formEditing: true
+        formEditing: true,
+        invalidLngMsg: INVALID_LNG_MSG
       })
     }
   }
@@ -148,7 +176,7 @@ class App extends React.Component <{}, State>{
           </p>
           <div>{this.state.health_service_area}</div>
           <br/>
-          { this.state.formEditing ? <LatLngForm currentLat = { this.state.currentLat } currentLng = { this.state.currentLng } updateLat={ this.updateLat } updateLng={ this.updateLng } /> : <LatLngForm currentLat = { this.state.currentLatLng.lat.toString() } currentLng = { this.state.currentLatLng.lng.toString() } updateLat={ this.updateLat } updateLng={ this.updateLng } />}
+          { this.state.formEditing ? <LatLngForm invalidLatMsg={ this.state.invalidLatMsg } invalidLngMsg={ this.state.invalidLngMsg } currentLat = { this.state.currentLat } currentLng = { this.state.currentLng } updateLat={ this.updateLat } updateLng={ this.updateLng } /> : <LatLngForm invalidLatMsg={ this.state.invalidLatMsg } invalidLngMsg={ this.state.invalidLngMsg } currentLat = { this.state.currentLatLng.lat.toString() } currentLng = { this.state.currentLatLng.lng.toString() } updateLat={ this.updateLat } updateLng={ this.updateLng } />}
           <br/>
           <button onClick={this.fetchCommunityHealthServiceArea} > Get Community Health Service Area </button>
           <br/>
