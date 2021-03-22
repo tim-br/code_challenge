@@ -229,7 +229,7 @@ class App extends React.Component<{}, State> {
             updateLng={this.updateLng}
           />
           <br />
-          <button onClick={this.fetchCommunityHealthServiceArea}>
+          <button className='btn' onClick={this.fetchCommunityHealthServiceArea}>
             {' '}
             Get Community Health Service Area{' '}
           </button>

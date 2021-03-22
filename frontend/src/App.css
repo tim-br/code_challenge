@@ -28,8 +28,19 @@
   color: #61dafb;
 }
 
-.span {
+.error {
   color: red;
+  font-size: 18px;
+}
+
+.btn {
+  background-color: #1A727C;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  border: none;
+  font-size: calc(5px + 2vmin);
 }
 
 @keyframes App-logo-spin {

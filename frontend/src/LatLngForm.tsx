@@ -27,7 +27,10 @@ const LatLngForm = (props: Props) => {
       {props.invalidLatMsg !== '' &&
       props.currentLat !== '' &&
       props.currentLat !== '-' ? (
-        <span> {props.invalidLatMsg} </span>
+        <div>
+            <br/>
+            <span className="error"> {props.invalidLatMsg} </span>
+        </div>
       ) : null}
       <br />
       <label>
@@ -37,7 +40,11 @@ const LatLngForm = (props: Props) => {
       {props.invalidLngMsg !== '' &&
       props.currentLng !== '' &&
       props.currentLng !== '-' ? (
-        <span> {props.invalidLngMsg} </span>
+        <div>
+            <br/>
+            <span className="error"> {props.invalidLngMsg} </span>
+        </div>
+
       ) : null}
     </form>
   )
