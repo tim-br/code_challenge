@@ -24,7 +24,9 @@ const LatLngForm = (props: Props) => {
         Latitude:
         <input type="text" value={props.currentLat} onChange={updateLat} />
       </label>
-      {props.invalidLatMsg !== '' && props.currentLat ? (
+      {props.invalidLatMsg !== '' &&
+      props.currentLat !== '' &&
+      props.currentLat !== '-' ? (
         <span> {props.invalidLatMsg} </span>
       ) : null}
       <br />
@@ -32,7 +34,9 @@ const LatLngForm = (props: Props) => {
         Longitude:
         <input type="text" value={props.currentLng} onChange={updateLng} />
       </label>
-      {props.invalidLngMsg !== '' && props.currentLng !== '' ? (
+      {props.invalidLngMsg !== '' &&
+      props.currentLng !== '' &&
+      props.currentLng !== '-' ? (
         <span> {props.invalidLngMsg} </span>
       ) : null}
     </form>

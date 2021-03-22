@@ -203,7 +203,7 @@ class App extends React.Component<{}, State> {
     return (
       <div className="App">
         <header className="App-header">
-          <p>Community Health Service Area</p>
+          <p>Community Health Service Area:</p>
           <div>{this.state.health_service_area}</div>
           <br />
           <LatLngForm
