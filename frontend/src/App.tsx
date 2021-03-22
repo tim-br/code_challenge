@@ -20,20 +20,22 @@ interface State {
   map: null | Map
   invalidLatMsg: string
   invalidLngMsg: string
+  init: boolean
 }
 
 class App extends React.Component<{}, State> {
   state = {
     health_service_area:
       'Click a location on the map to view your Community Health Service Area',
-    currentLatLng: { lat: 0, lng: 0 },
-    lastLatLng: { lat: 0, lng: 0 },
+    currentLatLng: { lat: 50.726669, lng: -120.647621 },
+    lastLatLng: { lat: 50.726669, lng: -120.647621 },
     currentLat: '50.726669',
     currentLng: '-120.647621',
-    formEditing: true,
+    formEditing: false,
     map: null,
     invalidLatMsg: '',
-    invalidLngMsg: ''
+    invalidLngMsg: '',
+    init: true
   }
 
   constructor(props: {} | Readonly<{}>) {
@@ -57,6 +59,9 @@ class App extends React.Component<{}, State> {
 
   setCurrentLatLng(latLng: LatLngExpression) {
     this.setState({
+      init: false
+    })
+    this.setState({
       currentLatLng: latLng,
       formEditing: false,
       invalidLatMsg: '',
@@ -65,6 +70,9 @@ class App extends React.Component<{}, State> {
   }
 
   setLastLatLng(latLng: LatLngExpression) {
+    this.setState({
+      init: false
+    })
     this.setState({
       lastLatLng: latLng,
       formEditing: false,
@@ -101,6 +109,9 @@ class App extends React.Component<{}, State> {
   }
 
   updateLng = (lng: string) => {
+    this.setState({
+      init: false
+    })
     if (lng !== null && lng !== '' && !Number.isNaN(parseFloat(lng))) {
       let lngFloat = parseFloat(lng)
       let newCurrentLatLng = {
@@ -128,6 +139,9 @@ class App extends React.Component<{}, State> {
   }
 
   fetchCommunityHealthServiceArea() {
+    this.setState({
+      init: false
+    })
     if (this.state.formEditing) {
       if (this.state.invalidLatMsg !== '' || this.state.invalidLngMsg !== '') {
         this.handleHealthServiceArea('INVALID LATITUDE OR LONGITUDE VALUE')
@@ -233,6 +247,7 @@ class App extends React.Component<{}, State> {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <AddMarker
+              init={this.state.init}
               formEditing={this.state.formEditing}
               lastLatLng={this.state.lastLatLng}
               latLng={this.state.currentLatLng}

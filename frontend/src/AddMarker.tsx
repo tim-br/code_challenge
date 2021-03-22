@@ -8,6 +8,7 @@ interface Props {
   latLng: LatLngExpression
   lastLatLng: LatLngExpression
   formEditing: boolean
+  init: boolean
 }
 
 const AddMarker = (props: Props) => {
@@ -20,11 +21,13 @@ const AddMarker = (props: Props) => {
   })
   return (
     <div>
-      {props.formEditing ? (
-        <Marker position={props.lastLatLng} />
-      ) : (
-        <Marker position={props.latLng} />
-      )}
+      {!props.init ? (
+        props.formEditing ? (
+          <Marker position={props.lastLatLng} />
+        ) : (
+          <Marker position={props.latLng} />
+        )
+      ) : null}
     </div>
   )
 }
